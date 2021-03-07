@@ -1,9 +1,12 @@
 package com.starter.registration.service;
 
-import com.starter.registration.dto.UserDTO;
+import com.starter.registration.dto.UserCreateDTO;
+import com.starter.registration.dto.UserInfoDTO;
 import com.starter.registration.entity.User;
+import com.starter.registration.excetion.ResourceNotFoundException;
 import com.starter.registration.repository.UserRepository;
 import com.starter.registration.service.impl.UserServiceImpl;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.validation.ConstraintViolationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
@@ -34,13 +39,43 @@ class UserServiceImplTest {
 
     @Test
     void createNewUser() {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setEmailId("test24@yahoo.com");
-        userDTO.setPassword("testPass");
+        UserCreateDTO userCreateDTO = new UserCreateDTO();
+        userCreateDTO.setEmailId("test24@yahoo.com");
+        userCreateDTO.setPassword("testPass");
         when(userRepository.save(any(User.class))).then(returnsFirstArg());
-        User savedUser = userService.createUser(userDTO);
+        User savedUser = userService.createUser(userCreateDTO);
         assertThat(savedUser).isNotNull();
-        assertThat(savedUser.getPassword()).isNotEqualTo(userDTO.getPassword());
+        assertThat(savedUser.getPassword()).isNotEqualTo(userCreateDTO.getPassword());
+    }
+
+    @Test
+    void findUserByEmailId() {
+        User user = new User();
+        user.setEmailId("test24@yahoo.com");
+        user.setPassword("testPass");
+        user.setLastName("Lname");
+        user.setFirstName("Fname");
+        when(userRepository.findByEmailId("test24@yahoo.com")).thenReturn(user);
+        UserInfoDTO userInfoByEmailId = userService.findUserByEmailId(user.getEmailId());
+        assertThat(userInfoByEmailId).isNotNull();
+        assertThat(userInfoByEmailId.getEmailId()).isEqualTo(user.getEmailId());
+        assertThat(userInfoByEmailId.getFirstName()).isEqualTo(user.getFirstName());
+        assertThat(userInfoByEmailId.getLastName()).isEqualTo(user.getLastName());
+        assertThat(userInfoByEmailId.getPreferredPet()).isEqualTo(user.getPreferredPet());
+    }
+
+
+    @Test
+    void findByIdShouldThrowResourceNotFoundExceptionWhenNoUserFound() {
+        User user = new User();
+        user.setEmailId("test24@yahoo.com");
+        user.setPassword("testPass");
+        user.setLastName("Lname");
+        user.setFirstName("Fname");
+        when(userRepository.findByEmailId("test24@yahoo.com")).thenThrow(new ResourceNotFoundException(""));
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            userService.findUserByEmailId("test24@yahoo.com");
+        });
     }
 
 }

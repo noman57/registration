@@ -1,6 +1,7 @@
 package com.starter.registration.repository;
 
 import com.starter.registration.entity.User;
+import com.starter.registration.enumuration.Breed;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,6 +57,26 @@ class UserRepositoryTest {
         userRepository.save(user);
         assertThat(userRepository.existsByEmailId(user.getEmailId())).isTrue();
     }
+
+
+    @Test
+    void findByEmailIdShouldReturnUser() {
+        User user = createUserObject("test24@test.com");
+        userRepository.save(user);
+        User byEmailId = userRepository.findByEmailId(user.getEmailId());
+        assertThat(byEmailId).isEqualTo(user);
+    }
+
+
+    @Test
+    void updateShouldUpdateBreed() {
+        User user = createUserObject("test24@test.com");
+        user.setPreferredPet(Breed.PUG);
+        userRepository.save(user);
+        User byEmailId = userRepository.findByEmailId(user.getEmailId());
+        assertThat(byEmailId.getPreferredPet()).isEqualTo(Breed.PUG);
+    }
+
 
     private User createUserObject(String s) {
         User user = new User();

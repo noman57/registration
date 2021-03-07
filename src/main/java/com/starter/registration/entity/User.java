@@ -1,5 +1,6 @@
 package com.starter.registration.entity;
 
+import com.starter.registration.enumuration.Breed;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,5 +48,9 @@ public class User {
     @UpdateTimestamp
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private ZonedDateTime updateTimeStamp;
+
+    private Breed preferredPet;
+
+    private boolean active;
 
 }
