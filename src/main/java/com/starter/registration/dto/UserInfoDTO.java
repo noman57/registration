@@ -15,7 +15,11 @@ public class UserInfoDTO {
 
     private String emailId;
 
-    private String password;
-
     private Breed preferredPet;
+
+    public  String getPreferredSpecies(){
+        return preferredPet!=null? preferredPet.getSpecies().name():null;
+    }
+
+
 }

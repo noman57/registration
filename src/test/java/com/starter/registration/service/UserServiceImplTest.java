@@ -3,6 +3,8 @@ package com.starter.registration.service;
 import com.starter.registration.dto.UserCreateDTO;
 import com.starter.registration.dto.UserInfoDTO;
 import com.starter.registration.entity.User;
+import com.starter.registration.enumuration.Breed;
+import com.starter.registration.enumuration.Species;
 import com.starter.registration.excetion.ResourceNotFoundException;
 import com.starter.registration.repository.UserRepository;
 import com.starter.registration.service.impl.UserServiceImpl;
@@ -15,8 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import javax.validation.ConstraintViolationException;
 
 import java.util.Optional;
 
@@ -57,6 +57,7 @@ class UserServiceImplTest {
         user.setPassword("testPass");
         user.setLastName("Lname");
         user.setFirstName("Fname");
+        user.setPreferredPet(Breed.BULL_DOG);
         when(userRepository.findByEmailId("test24@yahoo.com")).thenReturn(Optional.of(user));
         UserInfoDTO userInfoByEmailId = userService.findUserByEmailId(user.getEmailId());
         assertThat(userInfoByEmailId).isNotNull();
@@ -64,6 +65,7 @@ class UserServiceImplTest {
         assertThat(userInfoByEmailId.getFirstName()).isEqualTo(user.getFirstName());
         assertThat(userInfoByEmailId.getLastName()).isEqualTo(user.getLastName());
         assertThat(userInfoByEmailId.getPreferredPet()).isEqualTo(user.getPreferredPet());
+        assertThat(userInfoByEmailId.getPreferredSpecies()).isEqualTo(Species.DOG.name());
     }
 
 
