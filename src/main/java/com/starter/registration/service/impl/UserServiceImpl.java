@@ -11,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -34,12 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfoDTO findUserByEmailId(String emailId) {
-        User user = userRepository.findByEmailId(emailId);
-        if(user==null){
-            new ResourceNotFoundException("Resource not found by emailId "+emailId);
-        }
-        UserInfoDTO userInfoDTO = modelMapper.map(user, UserInfoDTO.class);
-        return userInfoDTO;
+        Optional<User> userOptional = userRepository.findByEmailId(emailId);
+        User user = userOptional.orElseThrow(() -> new ResourceNotFoundException("Resource not found by emailId " + emailId));
+        return modelMapper.map(user, UserInfoDTO.class);
     }
 
 

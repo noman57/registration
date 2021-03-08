@@ -11,6 +11,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.validation.ConstraintViolationException;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -63,8 +65,9 @@ class UserRepositoryTest {
     void findByEmailIdShouldReturnUser() {
         User user = createUserObject("test24@test.com");
         userRepository.save(user);
-        User byEmailId = userRepository.findByEmailId(user.getEmailId());
-        assertThat(byEmailId).isEqualTo(user);
+        Optional<User> byEmailId = userRepository.findByEmailId(user.getEmailId());
+        assertThat(byEmailId).isPresent();
+        assertThat(byEmailId.get()).isEqualTo(user);
     }
 
 
@@ -73,8 +76,9 @@ class UserRepositoryTest {
         User user = createUserObject("test24@test.com");
         user.setPreferredPet(Breed.PUG);
         userRepository.save(user);
-        User byEmailId = userRepository.findByEmailId(user.getEmailId());
-        assertThat(byEmailId.getPreferredPet()).isEqualTo(Breed.PUG);
+        Optional<User> userOptional =userRepository.findByEmailId(user.getEmailId());
+        assertThat(userOptional).isPresent();
+        assertThat(userOptional.get().getPreferredPet()).isEqualTo(Breed.PUG);
     }
 
 

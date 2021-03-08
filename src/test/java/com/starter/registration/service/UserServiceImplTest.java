@@ -18,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.ConstraintViolationException;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
@@ -55,7 +57,7 @@ class UserServiceImplTest {
         user.setPassword("testPass");
         user.setLastName("Lname");
         user.setFirstName("Fname");
-        when(userRepository.findByEmailId("test24@yahoo.com")).thenReturn(user);
+        when(userRepository.findByEmailId("test24@yahoo.com")).thenReturn(Optional.of(user));
         UserInfoDTO userInfoByEmailId = userService.findUserByEmailId(user.getEmailId());
         assertThat(userInfoByEmailId).isNotNull();
         assertThat(userInfoByEmailId.getEmailId()).isEqualTo(user.getEmailId());
