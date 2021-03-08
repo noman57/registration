@@ -2,6 +2,8 @@ package com.starter.registration.filter;
 
 import com.starter.registration.authentication.JwtTokenService;
 import com.starter.registration.authentication.UserAuthenticationService;
+import io.jsonwebtoken.MalformedJwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -35,8 +38,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
-            username = jwtTokenService.extractUsername(jwt);
+            try {
+                jwt = authorizationHeader.substring(7);
+                username = jwtTokenService.extractUsername(jwt);
+            } catch (MalformedJwtException e) {
+                log.debug("invalid token");
+            }
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

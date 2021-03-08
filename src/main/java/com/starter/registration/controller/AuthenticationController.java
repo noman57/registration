@@ -48,7 +48,7 @@ public class AuthenticationController {
           final String jwt = jwtTokenService.generateToken(userDetails);
           return ResponseEntity.ok(new AuthenticationResponseDTO(jwt));
       }catch (BadCredentialsException e) {
-          throw new IllegalArgumentException("Incorrect username or password", e);
+          throw new BadCredentialsException("Incorrect username or password", e);
       }
 
     }

@@ -61,6 +61,6 @@ class AuthenticationControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/authenticate")
                 .contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(authenticationRequestDTO)
                 ))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 }
