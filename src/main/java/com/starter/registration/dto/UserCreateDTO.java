@@ -13,8 +13,10 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class UserCreateDTO {
 
+    @NotEmpty
     private String firstName;
 
+    @NotEmpty
     private String lastName;
 
     @Email(message = "Email id  invalid")

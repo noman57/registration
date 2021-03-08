@@ -1,7 +1,6 @@
 package com.starter.registration.dto;
 
 import com.starter.registration.enumuration.Breed;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
