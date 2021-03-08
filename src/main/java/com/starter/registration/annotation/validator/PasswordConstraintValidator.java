@@ -1,6 +1,7 @@
 package com.starter.registration.annotation.validator;
 
 import com.starter.registration.annotation.ValidPassword;
+import lombok.SneakyThrows;
 import org.passay.*;
 
 import javax.validation.ConstraintValidator;
@@ -10,6 +11,14 @@ import java.util.List;
 
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
+
+   @Override
+   public void initialize(final ValidPassword arg0) {
+
+   }
+
+   @SneakyThrows
+   @Override
    public boolean isValid(String password, ConstraintValidatorContext context) {
       PasswordValidator passwordValidator = new PasswordValidator(Arrays.asList(
               // at least 8 characters
