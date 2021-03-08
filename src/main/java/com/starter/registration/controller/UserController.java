@@ -2,7 +2,6 @@ package com.starter.registration.controller;
 
 import com.starter.registration.dto.UserCreateDTO;
 import com.starter.registration.dto.UserInfoDTO;
-import com.starter.registration.entity.User;
 import com.starter.registration.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +24,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO,
                                         final UriComponentsBuilder ucBuilder) {
-        User user = userService.createUser(userCreateDTO);
-        final URI uri = ucBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri();
+        userService.createUser(userCreateDTO);
+        final URI uri = ucBuilder.path("/users/info").buildAndExpand().toUri();
         return ResponseEntity
                 .created(uri)
                 .build();
