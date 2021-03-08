@@ -12,10 +12,6 @@ import java.util.List;
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
 
-   @Override
-   public void initialize(final ValidPassword arg0) {
-
-   }
 
    @SneakyThrows
    @Override

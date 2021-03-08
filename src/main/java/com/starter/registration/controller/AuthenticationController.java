@@ -4,7 +4,6 @@ import com.starter.registration.authentication.UserAuthenticationService;
 import com.starter.registration.dto.AuthenticationRequestDTO;
 import com.starter.registration.authentication.JwtTokenService;
 import com.starter.registration.dto.AuthenticationResponseDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -38,14 +37,19 @@ public class AuthenticationController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@Valid @RequestBody AuthenticationRequestDTO authenticationRequestDTO) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authenticationRequestDTO.getUsername(),
-                        passwordEncoder.encode(authenticationRequestDTO.getPassword()), new ArrayList<>())
-        );
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequestDTO.getUsername());
-        final String jwt = jwtTokenService.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthenticationResponseDTO(jwt));
+    public ResponseEntity<Object> createUser(@Valid @RequestBody AuthenticationRequestDTO authenticationRequestDTO)  {
+      try{
+          authenticationManager.authenticate(
+                  new UsernamePasswordAuthenticationToken(authenticationRequestDTO.getUsername(),
+                          authenticationRequestDTO.getPassword(), new ArrayList<>())
+          );
+          final UserDetails userDetails = userDetailsService
+                  .loadUserByUsername(authenticationRequestDTO.getUsername());
+          final String jwt = jwtTokenService.generateToken(userDetails);
+          return ResponseEntity.ok(new AuthenticationResponseDTO(jwt));
+      }catch (BadCredentialsException e) {
+          throw new IllegalArgumentException("Incorrect username or password", e);
+      }
+
     }
 }
