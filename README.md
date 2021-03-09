@@ -46,6 +46,13 @@ running with docker
  docker run  noman57/registration .
 ```
 
+you can also pull a public docker image  from docker hub.
+Build from local jenkins pipeline
+
+```
+docker pull noman57/registration:latest
+```
+
 ## Project Architecture and features
 
    * Uses typical Rest architecture 
