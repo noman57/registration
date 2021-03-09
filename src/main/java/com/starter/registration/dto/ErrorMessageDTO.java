@@ -14,7 +14,7 @@ import java.util.List;
 public class ErrorMessageDTO {
 
     private HttpStatus status;
-    private List errors;
+    private List<String> errors;
 
 
     public ErrorMessageDTO(final HttpStatus status, final String message) {

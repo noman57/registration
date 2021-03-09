@@ -66,8 +66,9 @@ class UserRepositoryTest {
         User user = createUserObject("test24@test.com");
         userRepository.save(user);
         Optional<User> byEmailId = userRepository.findByEmailId(user.getEmailId());
-        assertThat(byEmailId).isPresent();
-        assertThat(byEmailId.get()).isEqualTo(user);
+        assertThat(byEmailId)
+                .isPresent()
+                .contains(user);
     }
 
 

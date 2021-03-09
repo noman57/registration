@@ -51,6 +51,5 @@ public class User {
 
     private Breed preferredPet;
 
-    private boolean active;
 
 }

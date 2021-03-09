@@ -1,6 +1,5 @@
-package com.starter.registration.controller;
+package com.starter.registration.excetion;
 import com.starter.registration.dto.ErrorMessageDTO;
-import com.starter.registration.excetion.ResourceNotFoundException;
 import javassist.tools.web.BadHttpRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
