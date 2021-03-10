@@ -2,8 +2,10 @@ package com.starter.registration.authentication;
 
 import io.jsonwebtoken.MalformedJwtException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
 
@@ -13,6 +15,12 @@ class JwtTokenServiceTest {
 
 
     private JwtTokenService jwtTokenService = new JwtTokenService();
+
+    @BeforeEach
+    public  void setUp(){
+
+        ReflectionTestUtils.setField(jwtTokenService,"SECRET_KEY","testvalue");
+    }
 
     @Test
     void extractUsernameShouldReturnUserName() {
