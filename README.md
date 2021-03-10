@@ -65,6 +65,7 @@ docker pull noman57/registration:latest
    * It uses Javax validation libraries validates incoming DTOs.
    * Implements Spring Java based initializer
    * Swagger Ui was added for rest endpoint debugging http://localhost:8080/swagger-ui/
+   * publicly the swagger will be  available at upon requet http://18.184.142.231:8080/swagger-ui/
   
 ## Challenges
 The design was bit tricky since there is both advantages and disadvantages of having one or multiple calls to the server.
