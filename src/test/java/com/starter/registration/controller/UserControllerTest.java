@@ -70,7 +70,7 @@ class UserControllerTest {
         userCreateDTO.setPassword("12345Aa@");
         userCreateDTO.setFirstName("fname");
         userCreateDTO.setLastName("lname");
-        userCreateDTO.setPreferredPet(Breed.PUG);
+        userCreateDTO.setPreferredPet(Breed.PUG.toString());
         User user = new User();
         user.setEmailId("test@email.com");
         when(userService.createUser(any())).thenReturn(user);

@@ -18,7 +18,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-class PasswordConstraintValidatorTest {
+class EnumClassValidatorTest {
 
     UserCreateDTO userCreateDTO;
 
@@ -33,14 +33,12 @@ class PasswordConstraintValidatorTest {
 
     @ParameterizedTest
     @CsvSource({
-            "123@a111,Password must contain 1 or more uppercase characters.",
-            "123@7A1,Password must be 8 or more characters in length.",
-            "123@1A11,Password must contain 1 or more lowercase characters."
+            "123@a111,Must be a valid choice Breed."
 
     })
-     void passwordMustContainUpperCaseChars(String password,String errorMsg) {
+     void validatorShouldReturnExceptionForInvalidInput(String enumValue, String errorMsg) {
         populateUserCreateDTO();
-        userCreateDTO.setPassword(password);
+        userCreateDTO.setPreferredPet(enumValue);
         Set<ConstraintViolation<UserCreateDTO>> violations = validator.validate(userCreateDTO);
         Iterator<ConstraintViolation<UserCreateDTO>> iterator = violations.iterator();
         assertThat(violations).hasSize(1);
@@ -52,6 +50,6 @@ class PasswordConstraintValidatorTest {
         userCreateDTO.setEmailId("validEmailId@yahoo.com");
         userCreateDTO.setFirstName("fname");
         userCreateDTO.setLastName("lname");
-        userCreateDTO.setPreferredPet(Breed.PUG.toString());
+        userCreateDTO.setPassword("Test-123");
     }
 }

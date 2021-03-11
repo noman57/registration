@@ -23,7 +23,7 @@ public class DataInitializer {
         userCreateDTO.setFirstName("fname");
         userCreateDTO.setEmailId("test@test.com");
         userCreateDTO.setPassword("password");
-        userCreateDTO.setPreferredPet(Breed.PUG);
+        userCreateDTO.setPreferredPet(Breed.PUG.getBreed());
         userService.createUser(userCreateDTO);
     }
 }

@@ -26,4 +26,9 @@ public enum Breed {
     public Species getSpecies() {
         return species;
     }
+
+    public String toString() {
+        return breed;
+    }
+
 }
