@@ -20,7 +20,7 @@ Backend for registration
  * Create a user using ```/user``` endpoint
  * authenticate using ```/authenticate``` end point and get the jwt token
  * Get user info using ```/users/info``` endpoint by providing the token
- * A test user is available with email Id ```test@test.com``` and password ```password```
+* A test user is available with email Id ```test@test.com``` and password ```password```
 
 ### Running application
 

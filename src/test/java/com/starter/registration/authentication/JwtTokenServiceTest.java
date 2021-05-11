@@ -18,7 +18,6 @@ class JwtTokenServiceTest {
 
     @BeforeEach
     public  void setUp(){
-
         ReflectionTestUtils.setField(jwtTokenService,"SECRET_KEY","testvalue");
     }
 
